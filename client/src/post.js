@@ -1,6 +1,6 @@
 import React from 'react'
 
-const post = () => {
+const Post = () => {
   return (
     <div className="post">
         <div className="image">
@@ -18,4 +18,4 @@ const post = () => {
   )
 }
 
-export default post
+export default Post
