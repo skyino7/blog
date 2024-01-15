@@ -1,25 +1,26 @@
 import './App.css';
-import Header from './header';
-import Post from './post';
+import Layout from './Layout';
+// import Header from './header';
+// import Post from './post';
+import HomePage from './pages/HomePage';
 import {Route, Routes} from "react-router-dom";
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
 
     <Routes>
 
-      <Route index element={
-        <main>
-          <Header />
-          <Post />
-          <Post />
-          <Post />
-        </main>
-      } />
+      <Route path="/" element={<Layout />}>
 
-      <Route path="/login" element={
-        <h1>Login</h1>
-      } />
+        <Route index element={<HomePage />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+      </Route>
 
     </Routes>
 
