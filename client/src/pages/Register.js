@@ -6,11 +6,18 @@ const Register = () => {
 
     async function register(ev) {
         ev.preventDefault();
-        await fetch('http://localhost:4000/register', {
-            method: 'Post',
+
+        const response = await fetch('http://localhost:4000/register', {
+            method: 'POST',
             body: JSON.stringify({Username, Password}),
             headers: {'Content-Type':'application/json'},
-        })
+        });
+
+        if (response.status === 200) {
+            alert('Registration successful!');
+        } else {
+            alert('Registration failed!');
+        }
     }
 
   return (

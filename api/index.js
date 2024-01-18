@@ -15,7 +15,8 @@ app.post('/register', async (req, res) => {
         const userDoc = await User.create({Username, Password});
         res.json(userDoc);
     } catch(e) {
-        res.status(400).json(e);
+        return res.status(400).json({ error: 'Username already exist' });
+        // res.status(400).json(e);
     }
 
 });
