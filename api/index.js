@@ -12,7 +12,7 @@ const secret = '3YHeXFSTUD0DepVCsdscsd2435wdaDWSDAWassd';
 const mongodbUrl = process.env.MONGODB_URL
 
 
-app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 mongoose.connect(mongodbUrl)
 
@@ -34,17 +34,18 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const {Username, Password} = req.body;
-    const userDoc = await User.findOne({Username});
+    const userDoc = await User.findOne({ Username });
     const passOk = bcrypt.compareSync(Password, userDoc.Password);
+    console.log(userDoc);
     if (passOk) {
         jwt.sign({Username,id:userDoc._id}, secret, {}, (err, token) => {
-           if (err) {
+            if (err) throw err;
             res.cookie('token', token).json({Ok});
-           }
         });
         // res.json(userDoc);
+        console.log('Login successful!');
     } else {
-        res.status(400).json({error: 'Wrong Credentials'});
+        console.log('Login failed!');
     }
 
 });

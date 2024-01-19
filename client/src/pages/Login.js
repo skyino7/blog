@@ -1,24 +1,31 @@
 import React from 'react'
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 
 const Login = () => {
   const [Username, setUsername] = useState('');
-  const [Password, setPassword] = useState('')
+  const [Password, setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   async function login(ev) {
     ev.preventDefault();
 
-    const response = await fetch('http://localhost:4000/login', {
+    await fetch('http://localhost:4000/login', {
       method: 'POST',
       body: JSON.stringify({Username, Password}),
       headers: {'Content-Type':'application/json'},
     });
 
-    if (response.status === 200) {
-      alert('Login successful!');
-    } else {
-      alert('Login failed!');
-    }
+    // if (response.ok) {
+    //   console.log('Login successful!');
+    //   setRedirect(true);
+    // } else {
+    //   console.log('Login failed!');
+    // }
+  }
+
+  if (redirect) {
+    return <Navigate to={'/'} />
   }
 
   return (
