@@ -1,18 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-const { mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 const app = express();
 const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 const salt = bcrypt.genSaltSync(10);
 const secret = '3YHeXFSTUD0DepVCsdscsd2435wdaDWSDAWassd';
+const mongodbUrl = process.env.MONGODB_URL
+
 
 app.use(cors());
 app.use(express.json());
+mongoose.connect(mongodbUrl)
 
-mongoose.connect('mongodb+srv://blog:3YHeXFSTUD0DepVC@cluster0.1h0enes.mongodb.net/?retryWrites=true&w=majority');
 
 app.post('/register', async (req, res) => {
     const {Username, Password} = req.body;
@@ -46,4 +49,4 @@ app.post('/login', async (req, res) => {
 
 });
 
-app.listen(4000);
+app.listen(process.env.PORT);
