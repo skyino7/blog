@@ -14,14 +14,14 @@ const Login = () => {
       method: 'POST',
       body: JSON.stringify({Username, Password}),
       headers: {'Content-Type':'application/json'},
-      credentials: 'include'
+      credentials: 'include',
     });
 
     if (response.ok) {
-      console.log('Login successful!');
+      // console.log('Login successful!');
       setRedirect(true);
     } else {
-      console.log('Login failed!');
+      alert('Login failed!');
     }
   }
 

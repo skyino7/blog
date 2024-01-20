@@ -35,18 +35,22 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const {Username, Password} = req.body;
     const userDoc = await User.findOne({Username});
-    const passOk = bcrypt.compareSync(Password, userDoc.Password);
-    console.log(userDoc);
-    if (passOk) {
-        jwt.sign({Username,id:userDoc._id}, secret, {}, (err, token) => {
-            if (err) throw err;
-            res.cookie('token', token).json({Ok});
-        });
-        // res.json(userDoc);
-        console.log('Login successful!');
+    if (userDoc && userDoc.Password) {
+        const passOk = bcrypt.compareSync(Password, userDoc.Password);
+        if (passOk) {
+            jwt.sign({Username,id:userDoc._id}, secret, {}, (err, token) => {
+                if (err) throw err;
+                res.cookie('token', token).json({token});
+            });
+            // res.json(userDoc);
+            console.log('Login successful!');
+        } else {
+            console.log('Login failed!');
+        }
     } else {
-        console.log('Login failed!');
+        console.error('User not found');
     }
+    // console.log(userDoc);
 
 });
 
