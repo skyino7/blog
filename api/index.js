@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const app = express();
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
+const cookieParser = require('cookie-parser');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = '3YHeXFSTUD0DepVCsdscsd2435wdaDWSDAWassd';
@@ -14,6 +15,8 @@ const mongodbUrl = process.env.MONGODB_URL
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
+app.use(cookieParser());
+
 mongoose.connect(mongodbUrl)
 
 
@@ -51,7 +54,18 @@ app.post('/login', async (req, res) => {
         console.error('User not found');
     }
     // console.log(userDoc);
+});
 
+app.get('/profile', (req, res) => {
+    const {token} = req.cookies;
+    jwt.verify(token, secret, {}, (err, info) => {
+        if (err) throw err;
+        res.json(info);
+    });
+});
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('token').json({ok: true});
 });
 
 app.listen(process.env.PORT);
