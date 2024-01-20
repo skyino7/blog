@@ -10,18 +10,19 @@ const Login = () => {
   async function login(ev) {
     ev.preventDefault();
 
-    await fetch('http://localhost:4000/login', {
+    const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
       body: JSON.stringify({Username, Password}),
       headers: {'Content-Type':'application/json'},
+      credentials: 'include'
     });
 
-    // if (response.ok) {
-    //   console.log('Login successful!');
-    //   setRedirect(true);
-    // } else {
-    //   console.log('Login failed!');
-    // }
+    if (response.ok) {
+      console.log('Login successful!');
+      setRedirect(true);
+    } else {
+      console.log('Login failed!');
+    }
   }
 
   if (redirect) {
