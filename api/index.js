@@ -38,6 +38,7 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const {Username, Password} = req.body;
     const userDoc = await User.findOne({Username});
+    console.log(req.body);
     if (userDoc && userDoc.Password) {
         const passOk = bcrypt.compareSync(Password, userDoc.Password);
         if (passOk) {
@@ -47,11 +48,12 @@ app.post('/login', async (req, res) => {
                     id:userDoc._id,
                     Username,
                 });
+                console.log(token);
             });
-            // res.json(userDoc);
-            console.log('Login successful!');
+            console.log(userDoc);
+            console.log('Login Successful!');
         } else {
-            console.log('Login failed!');
+            console.log('Login Failed!');
         }
     } else {
         console.error('User not found');
