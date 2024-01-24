@@ -1,6 +1,6 @@
-const { createContext, useState } = require("react");
+import React, { createContext, useContext, useState } from "react";
 
-export const UserContext = createContext;
+const UserContext = createContext();
 
 export function UserContextProvider({children}) {
     const [userInfo, setUserInfo] = useState({})
@@ -9,4 +9,8 @@ export function UserContextProvider({children}) {
             {children}
         </UserContextProvider>
     );
+}
+
+export function useUserContext() {
+    return useContext(UserContext);
 }
