@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-// import { UserContext } from './UserContext';
-import { useUserContext } from './UserContext';
+import { UserContext } from './UserContext';
+// import { useUserContext } from './UserContext';
 
 const Header = () => {
-  const {setUserInfo, userInfo} = useUserContext();
+  const {setUserInfo, userInfo} = useContext(UserContext);
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
@@ -32,7 +32,7 @@ const Header = () => {
           {Username && (
             <>
               <Link to="/create">Create Post</Link>
-              <a onClick={logout}>Logout</a>
+              <a onClick={logout}>Logout ({Username})</a>
             </>
           )}
           {!Username && (
