@@ -7,13 +7,13 @@ import HomePage from './pages/HomePage';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
-// import { UserContextProvider } from './UserContext';
+import { UserContextProvider } from './UserContext';
 
 function App() {
   return (
 
-    // <UserContextProvider>
-    <Router>
+    <UserContextProvider>
+
     <Routes>
       <Route
         path="/"
@@ -24,8 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Route>
     </Routes>
-  </Router>
-    // {/* </UserContextProvider> */}
+    </UserContextProvider>
 
   );
 }
