@@ -13,17 +13,13 @@ function App() {
   return (
 
     <UserContextProvider>
-
-    <Routes>
-      <Route
-        path="/"
-        element={<Layout />}
-      >
-        <Route index element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Route>
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+      </Routes>
     </UserContextProvider>
 
   );

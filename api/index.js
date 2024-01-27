@@ -17,7 +17,7 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect(mongodbUrl)
+mongoose.connect(mongodbUrl);
 
 
 app.post('/register', async (req, res) => {
