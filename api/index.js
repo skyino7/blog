@@ -7,6 +7,9 @@ const app = express();
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'uploads/' });
+const fs = require('fs');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = '3YHeXFSTUD0DepVCsdscsd2435wdaDWSDAWassd';
@@ -71,6 +74,15 @@ app.get('/profile', (req, res) => {
 
 app.post('/logout', (req, res) => {
     res.clearCookie('token').json({ok: true});
+});
+
+app.post('/post', uploadMiddleware.single('files'), (req, res) => {
+    const {originalname, path} = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = `${path}.${ext}`;
+    fs.renameSync(path, newPath);
+    res.json({ext});
 });
 
 app.listen(process.env.PORT);

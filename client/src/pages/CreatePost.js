@@ -27,7 +27,7 @@ const CreatePost = () => {
     const [content, setContent] = useState('');
     const [files, setFiles] = useState('');
 
-    function createNewPost(ev) {
+    async function createNewPost(ev) {
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
@@ -35,16 +35,11 @@ const CreatePost = () => {
         data.set('files', files[0]);
 
         ev.preventDefault();
-        fetch('http://localhost:4000/post', {
+        const response = await fetch('http://localhost:4000/post', {
             method: 'POST',
             body: data,
-        }).then(response => {
-            if (response.ok) {
-                console.log('Post created!');
-            } else {
-                alert('Post creation failed!');
-            }
         });
+        console.log(await response.json());
     }
 
   return (
