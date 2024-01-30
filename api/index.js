@@ -21,6 +21,8 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/uploads', express.static('uploads'));
+
 mongoose.connect(mongodbUrl);
 
 
@@ -85,20 +87,29 @@ app.post('/post', uploadMiddleware.single('files'), async (req, res) => {
     const newPath = `${path}.${ext}`;
     fs.renameSync(path, newPath);
 
-    const {title, summary, content} = req.body;
-    const postDoc = await Post.create({
-        title,
-        summary,
-        content,
-        file: newPath,
-    });
+    const {token} = req.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err;
 
-    res.json(postDoc);
+        const {title, summary, content} = req.body;
+        const postDoc = await Post.create({
+            title,
+            summary,
+            content,
+            file: newPath,
+            author: info.id,
+        });
+
+        res.json(postDoc);
+    });
 
 });
 
 app.get('/post', async (req, res) => {
-    const posts = await Post.find();
+    const posts = await Post.find()
+    .populate('author', ['Username'])
+    .sort({createdAt: -1})
+    .limit(20);
     res.json(posts);
 });
 
