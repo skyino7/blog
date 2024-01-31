@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import {response} from 'express';
 import { useState } from 'react';
 
 const PostPage = () => {
