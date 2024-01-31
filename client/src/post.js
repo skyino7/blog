@@ -12,7 +12,9 @@ const Post = ({title, summary, file, content, createdAt, author}) => {
           </Link>
         </div>
         <div className="texts">
+          <Link to={'/post/id'}>
             <h2>{title}</h2>
+          </Link>
         <p className="info">
             <a className="author">{author.Username}</a>
             <time className="time">{format((createdAt), 'MMM d, yyyy, HH:mm')}</time>
