@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 const PostPage = () => {
     const [postInfo, setPostInfo] = useState(null);
@@ -19,7 +20,7 @@ const PostPage = () => {
   return (
     <div className='post-page'>
       <h1>{postInfo.title}</h1>
-      <p>{postInfo.author.Username} || {postInfo.createdAt}</p>
+      <p>{postInfo.author.Username} {format((postInfo.createdAt), 'MMM d, yyyy, HH:mm')}</p>
       <div className='image'>
         <img src={`http://localhost:4000/${postInfo.file}`} alt="post" />
       </div>
