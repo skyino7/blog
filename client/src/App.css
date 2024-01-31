@@ -51,6 +51,11 @@ header nav {
   font-size: 1.8rem;
 }
 
+.post .texts a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .post p.info {
   margin: 6px 0;
   color: #888;
