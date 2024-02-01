@@ -20,7 +20,7 @@ const PostPage = () => {
   return (
     <div className='post-page'>
       <h1>{postInfo.title}</h1>
-      <p>{postInfo.author.Username} {format((postInfo.createdAt), 'MMM d, yyyy, HH:mm')}</p>
+      <p>By {postInfo.author.Username} on {format((postInfo.createdAt), 'MMM d, yyyy, HH:mm')}</p>
       <div className='image'>
         <img src={`http://localhost:4000/${postInfo.file}`} alt="post" />
       </div>
