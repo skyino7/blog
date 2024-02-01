@@ -137,7 +137,7 @@ form.login h1, form.register h1 {
 
 .post-page .actions {
   display: inline-block;
-  /* justify-content: space-evenly; */
+  justify-content: space-evenly;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -148,6 +148,7 @@ form.login h1, form.register h1 {
   color: white;
   /* background-color: #555; */
   padding: 10px;
+  border-radius: 5px;
 }
 
 .post-page .actions a.edit {
@@ -158,4 +159,10 @@ form.login h1, form.register h1 {
 .post-page .actions a.delete {
   /* margin-right: 10px; */
   background-color: #f80216;
+}
+
+a svg {
+  width: 20px;
+  height: 20px;
+  padding-top: 5px;
 }
