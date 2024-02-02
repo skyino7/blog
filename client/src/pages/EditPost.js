@@ -1,21 +1,51 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import {Navigate} from "react-router-dom";
 import Editor from '../editor';
+import { useParams } from 'react-router-dom';
 
 const EditPost = () => {
+    const {id} = useParams();
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [content, setContent] = useState('');
     const [files, setFiles] = useState('');
-    const [redirect, setRedirect] = useState('');
+    const [redirect, setRedirect] = useState(false);
+
+    useEffect(() => {
+        fetch(`http://localhost:4000/post/`+id).then(response => {
+            response.json().then(postInfo => {
+                setTitle(postInfo.title);
+                setSummary(postInfo.summary);
+                setContent(postInfo.content);
+            });
+        });
+    }, []);
 
     async function updatePost(ev) {
         ev.preventDefault();
+        const data = new FormData();
+        data.set('title', title);
+        data.set('summary', summary);
+        data.set('content', content);
+        data.set('id', id);
+        if (files?.[0]) {
+            data.set('file', files[0]);
+        }
+        const response = await fetch('http://localhost:4000/post/', {
+            method: 'PUT',
+            body: data,
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            setRedirect(true);
+        }
+
     }
 
     if (redirect) {
-        return <Navigate to={'/'} />
+        return <Navigate to={'/post/'+id} />
     }
 
     return (
@@ -24,7 +54,7 @@ const EditPost = () => {
             <input type="summary" placeholder='summary' value={summary} onChange={ev => setSummary(ev.target.value)}/>
             <input type='file' onChange={ev => setFiles(ev.target.files)}/>
             <Editor onChange={setContent} value={content}/>
-            <button style={{marginTop:'10px'}}>Create Post</button>
+            <button style={{marginTop:'10px'}}>Update Post</button>
         </form>
       );
 }
