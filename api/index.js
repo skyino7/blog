@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
                 });
                 console.log(token);
             });
-            console.log(userDoc);
+            // console.log(userDoc);
             console.log('Login Successful!');
         } else {
             console.log('Login Failed!');
