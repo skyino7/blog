@@ -23,7 +23,7 @@ const PostPage = () => {
   return (
     <div className='post-page'>
       <h1>{postInfo.title}</h1>
-      <p>By {postInfo.author.Username} on {format((postInfo.createdAt), 'MMM d, yyyy, HH:mm')}</p>
+      <p>By <b>{postInfo.author.Username}</b> on {format((postInfo.createdAt), 'MMM d, yyyy, HH:mm')}</p>
       {userInfo.id === postInfo.author._id && (
         <div className='actions'>
           <Link className='edit' to={`/edit/${postInfo._id}`}>

@@ -11,10 +11,11 @@ const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const uploadMiddleware = multer({ dest: 'uploads/' });
 const fs = require('fs');
+const dbConnect = require('./config/db');
 
 const salt = bcrypt.genSaltSync(10);
 const secret = '3YHeXFSTUD0DepVCsdscsd2435wdaDWSDAWassd';
-const mongodbUrl = process.env.MONGODB_URL
+// const mongodbUrl = process.env.MONGODB_URL
 
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
@@ -23,7 +24,10 @@ app.use(cookieParser());
 
 app.use('/uploads', express.static('uploads'));
 
-mongoose.connect(mongodbUrl);
+// Connect to MongoDB
+dbConnect();
+
+// mongoose.connect(mongodbUrl);
 
 
 app.post('/register', async (req, res) => {
@@ -162,4 +166,8 @@ app.get('/post/:id', async (req, res) => {
     res.json(postDoc);
 });
 
-app.listen(process.env.PORT);
+port = process.env.PORT;
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
